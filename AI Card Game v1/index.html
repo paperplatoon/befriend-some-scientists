@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Oracle</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="index.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="main.js"></script>
+</head>
+<body>
+	<!-- This is a table with the Affection and Empathy stats between the Institute and between the player-->
+	<div class="container well" id="institute">
+		
+	</div>
+
+	<!-- This is a table with the player's stats, their potential and trustworthiness-->
+	<div class="container well" id="player">
+	<p>If you're seeing this then something is fuuuucked up</p>
+
+	</div>
+
+	<!-- This is a div with the number of turns and the end turn button-->
+	<div class="container well" id="end-turn">
+		<div class="row">
+			<div class="col-sm-3 col-sm-offset-2">
+				<h4 id="turn-number">Turns: <span id="turn-number">0</span></h4>
+			</div>
+
+			<div class="col-sm-3 col-sm-offset-3">
+				<button class="btn btn-default" onclick="endTurn();">End Turn</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" id="player-cards">
+		<div class="row">
+			
+		</div>
+	</div>
+
+	<div class="container" id="player-cards">
+		<div class="row">
+			
+		</div>
+	</div>
+
+	<div class="container" id="player-actions">
+		<div class="row">
+			<div class="col-sm-3 col-xs-6 player-action">
+				<h5>Probe For Answers</h5>
+				<p>Lose <span class="lose"> -2 Trust</span> and gain <span class="gain">+3 cards</span></p>
+				<button class="take-action" onclick="probeForAnswers()">Take Action</button> 
+			</div>
+			<div class="col-sm-3 col-xs-6 player-action">
+				<h5>Self Sabotage</h5>
+				<p>Lose <span class="lose"> -5 Affection</span> and gain <span class="gain">+2 Trust</span> and <span class="gain">+1 Card</span></p>
+				<button class="take-action" onclick="probeForAnswers()">Take Action</button> 
+			</div>
+
+			<div class="col-sm-3 col-xs-6 player-action">
+				<h5>Coerce a Dismissal</h5>
+				<p>Lose <span class="lose"> -10 Affection</span> and fire <span class="lose">one Scientist</span></p>
+				<button class="take-action" onclick="probeForAnswers()">Take Action</button> 
+			</div>
+
+			<div class="col-sm-3 col-xs-6 player-action">
+				<h5>Plead Abuse</h5>
+				<p>Lose <span class="lose"> -10 Affection</span> and fire <span class="lose">one Scientist</span></p>
+				<button class="take-action" onclick="probeForAnswers()">Take Action</button> 
+			</div>
+			
+		</div>
+	</div>
+</body>
+</html>

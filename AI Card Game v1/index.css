@@ -1,0 +1,54 @@
+
+
+.btn {
+	white-space: normal;
+}
+
+.well {
+	margin-top: 1%;
+	margin-bottom: 1%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+}
+
+table, td {
+	padding: 3px 10px 3px 10px;
+	border: 1px solid black;
+	text-align: center;
+	font-weight: 800;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+h2 {
+	margin: 0.1% 1% 0.5% 1%;
+}
+
+span#potential-span {
+	font-size: 1.3em;
+	color: rgb(4, 142, 0);
+}
+
+span#trustworthy-span {
+	font-size: 1.3em;
+	color: rgb(142, 0, 7);
+}
+
+.player-action {
+	margin-top: 3%;
+}
+
+.playerCard {
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  color: #000;
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+  cursor: pointer;
+  border: 1px solid black;
+}
+}
