@@ -44,7 +44,7 @@ div.end-turn {
 	flex: 1;
 }
 
-div.trust-render, div.potential-render {
+div.emp-render, div.potential-render {
 	text-align: center;
 	flex: 3;
 }
@@ -59,6 +59,19 @@ button.end-turn {
 	background-color: pink;
 }
 
+/* Scientist Cards  */
+
+div.scientists {
+	display: flex;
+	flex-direction: row;
+	min-height: 25vh;
+}
+
+.scientistCard {
+	background-color: #e5efff;
+	margin: 1%;
+}
+
 
 /* Player Cards  */
 
@@ -66,8 +79,9 @@ div.player-cards {
 	display: flex;
 	flex-direction: row;
 	min-height: 25vh;
-	max-height: 25vh;
-	background-color: #e5efff;
+	background-color: pink;
+	margin: auto;
+	margin-top: 1%;
 }
 
 .playerCard {

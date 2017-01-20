@@ -26,7 +26,6 @@ const crackjoke = {
   name: 'Crack a Joke',
   text: 'Gain +2 Affection and +1 Trust',
   cardEffect: function () {
-    console.log('crack a joke sure is working')
     window.Player.playerAffection += 2
   }
 }
@@ -36,7 +35,6 @@ const consolation = {
   name: 'Console Sad Researcher',
   text: 'Gain +4 Affection',
   cardEffect: function () {
-    console.log('consolation sure is working')
     window.Player.playerAffection += 4
   }
 }
@@ -46,7 +44,6 @@ const politics = {
   name: 'Political Harmony',
   text: 'Gain +5 Affection',
   cardEffect: function () {
-    console.log('political harmony sure is working')
     window.Player.playerAffection += 5
   }
 }
@@ -85,7 +82,10 @@ const scientist1 = {
   affReq: 6,
   evolveTo: 'scientist1a',
   gainCards: 1,
-  gainPotertial: 1
+  gainPotertial: 1,
+  getSmarter: function () {
+    Object.assign(scientist1, scientist1a)
+  }
 }
 
 const scientist1a = {
@@ -146,7 +146,7 @@ const drawACard = function (myArray) {
 // It also returns the card
 const playerDraw = function (myArray) {
   const tempCard = drawACard(myArray)
-  if (playerHand.length <= 3) {
+  if (playerHand.length <= 4) {
     playerHand.push(tempCard)
   } else {
     window.alert('Your hand is full. ' + tempCard.name + ' was discarded.')
@@ -156,24 +156,33 @@ const playerDraw = function (myArray) {
   return tempCard
 }
 
+const ScientistDraw = function (myArray) {
+  const tempScientist = drawACard(myArray)
+  if (scientistsInPlay.length <= 3) {
+    scientistsInPlay.push(tempScientist)
+  } else {
+    window.alert('No research openings. ${tempScientist.name} was not hired.')
+    trashArray.push(tempScientist)
+  }
+  displayScientists()
+  return tempScientist
+}
+
 // Takes an array of cards and places myCard into the UI correctly
 
 // takes a card and executes that card's effect, then locates the card's index in the player's hand
 // and removes the card from the player's hand, then pushes it to the trash array.
 const playCard = function (myCardIndex) {
-  console.log(playerHand[myCardIndex], {myCardIndex, playerHand})
   const discardedCard = playerHand.splice(myCardIndex, 1)[0]
-  console.log({discardedCard})
   discardedCard.cardEffect()
-  console.log({playerHand})
   trashArray.push(discardedCard)
   displayPlayerHand()
-  renderTrust()
-  renderPlayer()
+  renderEmpathy()
+  renderPotential()
 }
 
-const renderTrust = function () {
-  $('.trust-render').html(
+const renderEmpathy = function () {
+  $('.emp-render').html(
   ` <div class="empathy-affection-stats">
       <h3 class="stat-name-col">Empathy: ${window.Player.playerEmpathy}</h3>
       <h3 class="stat-name-col">Affection: ${window.Player.playerAffection}</h3>
@@ -181,13 +190,79 @@ const renderTrust = function () {
     `)
 }
 
-const renderPlayer = function () {
+const renderPotential = function () {
   $('.potential-render').html(
   ` <div class="potential-stats">
         <h2 class="stat-name-col">Potential: ${window.Player.playerPotential}/100</h2>
         <h3 class="stat-name-col">(+ ${scientistsInPlay.length})</h3>
     </div>
     `)
+}
+
+// displays the Scientists correctly
+const displayScientists = function () {
+  const [one, two, three, four] = scientistsInPlay
+  const _scientistsInPlay = [one, two, three, four]
+
+  const scientistsZone = $('.scientists')
+  scientistsZone.empty()
+
+  const scientistsHtml = _scientistsInPlay
+    .map(renderScientist)
+    .join('')
+
+  scientistsZone.html(scientistsHtml)
+  console.log('fired')
+}
+
+const renderScientist = function (scientist, index) {
+  if (!scientist) {
+    return `<div class="col-sm-3 col-xs-6 scientistCard">
+    <p style="color: grey">[no scientist]</p>
+    </div>
+    `
+  }
+  return `
+    <div class="col-sm-3 col-xs-6 scientistCard">
+      <div class="nameAndTurns" style="display:flex; flex-direction:row;">
+        <h3 style="flex:5;">${scientist.name}</h3>
+        <h2 style="flex:1; color:red">${scientist.turnsToEnd}</h2>
+      </div>
+      <h4>Cards: + ${scientist.gainCards}</h4>
+      <h4>Potential: + ${scientist.gainPotertial}</h4>
+      <button class="scientistButton" onclick="playEmpathy(${index})">${scientist.empReq} Empathy</button>
+      <button class="scientistButton" onclick="playAffection(${index})">${scientist.affReq} Affection</button>
+    </div> `
+}
+
+const playEmpathy = function (myScientistIndex) {
+  console.log(scientistsInPlay[myScientistIndex], {myScientistIndex, scientistsInPlay})
+  const playedScientist = scientistsInPlay.splice(myScientistIndex, 1)[0]
+  console.log({playedScientist})
+  if (playedScientist.empReq <= window.Player.playerEmpathy) {
+    playedScientist.getSmarter()
+    displayScientists()
+    renderEmpathy()
+    renderPotential()
+  } else {
+
+  }
+  alert('You do not have enough Empathy')
+}
+
+const playAffection = function (myScientistIndex) {
+  console.log(scientistsInPlay[myScientistIndex], {myScientistIndex, scientistsInPlay})
+  const playedScientist = scientistsInPlay.splice(myScientistIndex, 1)[0]
+  console.log({playedScientist})
+  if (playedScientist.affReq <= window.Player.playerAffection) {
+    playedScientist.getSmarter()
+    displayScientists()
+    renderEmpathy()
+    renderPotential()
+  } else {
+
+  }
+  alert('You do not have enough Affection')
 }
 
 // displays your hand correctly
@@ -203,7 +278,6 @@ const displayPlayerHand = function () {
     .join('')
 
   cardZone.html(cardsHtml)
-  console.log('fired')
 }
 
 const renderCard = function (card, index) {
@@ -226,8 +300,10 @@ $(window).load(function () {
   playerDraw(deckArray)
   playerDraw(deckArray)
   playerDraw(deckArray)
-  renderPlayer()
-  renderTrust()
+  renderPotential()
+  renderEmpathy()
+  ScientistDraw(scientistDeck)
+  ScientistDraw(scientistDeck)
   console.log({deckArray})
   console.log({playerHand})
 })
@@ -253,8 +329,8 @@ function endTurn () {
   window.Player.turns += 1
   window.Player.playerPotential += 1
 
-  renderPlayer()
-  renderTrust()
+  renderPotential()
+  renderEmpathy()
 
   isGameOver()
 }
